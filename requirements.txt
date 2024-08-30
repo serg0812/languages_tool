@@ -6,4 +6,4 @@ pydantic==1.10.12
 psycopg2-binary
 python-dotenv
 Werkzeug
-python-telegram-bot
+python-telegram-bot==21.4
