@@ -1,10 +1,9 @@
-streamlit==1.38
+streamlit==1.35
 langchain-community
 langchain-core
 langchain-openai
 pydantic==1.10.12
-psycopg2-binary
-database
+psycopg2-binary==2.9
 python-dotenv
 Werkzeug
 telegram
