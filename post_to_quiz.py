@@ -35,7 +35,7 @@ def generate_voice_response(text_to_voice):
     )
 
     # Save the greeting audio to a temporary file
-    voice_audio_path = "../audio/quiz_audio.mp3"
+    voice_audio_path = "./audio/quiz_audio.mp3"
     voice_response.stream_to_file(voice_audio_path)
 
 async def post_quiz(text_to_voice, options, correct_option_id, index) -> None:
@@ -49,8 +49,8 @@ async def post_quiz(text_to_voice, options, correct_option_id, index) -> None:
         "question": f"Угадай значение этой фразы на {guess[index]}: {text_to_voice}",
         "options": options,
         "correct_option_id": correct_option_id,
-        "photo": f"../photos/{countries[index]}_map_flag.png",
-        "audio": "../audio/quiz_audio.mp3"
+        "photo": f"./photos/{countries[index]}_map_flag.png",
+        "audio": "./audio/quiz_audio.mp3"
     }
 
     logger.info(f"Sending photo for intro: {question['intro']}")

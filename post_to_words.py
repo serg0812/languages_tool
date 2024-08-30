@@ -33,7 +33,7 @@ def generate_voice_response(text_to_voice):
         voice="alloy",
         input=text_to_voice,
     )
-    voice_audio_path = "../audio/words_audio.mp3"
+    voice_audio_path = "./audio/words_audio.mp3"
     voice_response.stream_to_file(voice_audio_path)
 
 async def post_words(topic, text_to_voice, index) -> None:
@@ -71,7 +71,7 @@ async def post_words(topic, text_to_voice, index) -> None:
         await application.bot.send_message(chat_id=CHANNEL_ID[index], text=message_text, parse_mode="MarkdownV2")
 
         # Send the generated audio
-        with open("../audio/words_audio.mp3", "rb") as audio_file:
+        with open("./audio/words_audio.mp3", "rb") as audio_file:
             await application.bot.send_audio(chat_id=CHANNEL_ID[index], audio=audio_file)
 
         

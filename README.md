@@ -1,8 +1,11 @@
-auth.py - authorise the user, create and sign him in, the db in this version is in aws postgres
-database.py inserts into chat_history table the latest conversation
-chat.py fetches the latest conversation of the user from the database
-app.py - main app, yet to be splitted, runs the show, call the functions from tooling and the functions to send to the channel
-tooling.py main function to do magic
-post_to... functions to send specific blocks to specific channels
+the apps are connected to the cloud db. details are stored in streamlit and locally
 
-as of 29.08 night: tested post_words, changed all other posts but not tested, test randomly in the morning, then switch using secrets and good to push
+sign up is disabled, new users can be created only locally from ling... in lang.._ch
+
+app.py - the main app
+auth.py - authorize the users and checks the creds
+database.py - saves the last conversation 
+chat.py - fetches the last conversation with user_id and session_id
+tooling.py - tools to work, words, sentences, quiz and song are available now
+When song is generated, the actual music  has to run and to be uploaded locally for now
+post_to_... - these are called from app.py based on send_json and are posted to the channels
