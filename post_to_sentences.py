@@ -3,8 +3,40 @@ from telegram.ext import Application
 from openai import OpenAI
 import re
 import streamlit as st
+from flux_call import generate_image
 
 client = OpenAI()
+
+def generate_photo_prompt(user_prompt):
+  system_prompt = """
+  You are a master in creating prompts for online tool making images
+  You will be given a bunch of sentences with each of them translated into Russian, then you should pick up from them jsut one
+  You should ignore their Russian translation, just focus on the originals
+  You criteria to pick one of them up should be based on what will be the most intersting picture
+  You should pick up just ONE sentence and build the prompt around it
+  The sentences will be based on the same person and will contain facts of this person life.
+  Examples of sentenses
+  Albert Einstein loved playing violin
+  He got a Nobel prize for photelectric effect
+  He was married twice
+  He escaped Nazi Germany and move to the US where he lived the rest of his life
+
+  Your promp should look like this
+  Examples:
+  Albert Einshtein playing violin in his laboratory surronded by students
+  
+  """
+  completion = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {"role": "system", "content": f"{system_prompt}"},
+        {"role": "user", "content": f"Translate this into Russian: {user_prompt}"}
+      ]
+      )
+  print(completion.choices[0].message.content.strip())
+  return completion.choices[0].message.content.strip()
+    
+
 
 # Enable logging
 logging.basicConfig(
@@ -60,8 +92,17 @@ async def post_sentences(topic, text_to_voice, index) -> None:
             formatted_lines.append(formatted_line)
 
     message_text = intro_text + "\n".join(formatted_lines)
+    text=generate_photo_prompt(message_text)
+    generate_image(text)
+
 
     try:
+        with open("./photos/output_sentence.png", "rb") as photo_file:
+            await application.bot.send_photo(
+                chat_id=CHANNEL_ID[index],
+                photo=photo_file,
+            )
+
         # Send the message to the channel
         await application.bot.send_message(chat_id=CHANNEL_ID[index], text=message_text, parse_mode="MarkdownV2")
         
